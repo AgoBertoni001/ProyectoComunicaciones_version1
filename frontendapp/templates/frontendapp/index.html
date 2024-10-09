@@ -1,0 +1,9 @@
+{% extends 'layouts/layout.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+    <h2>Bienvenido a la App de Monitoreo de Plantas</h2>
+    <p>El objetivo es determinar el estado de la planta y conocer más acerca de la misma.</p>
+    <a href="{% url 'subir_imagen' %}">Subir Imagen de Planta</a>
+{% endblock %}

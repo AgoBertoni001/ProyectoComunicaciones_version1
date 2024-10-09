@@ -1,0 +1,34 @@
+{% extends 'layouts/layout.html' %}
+
+{% block title %}Mis Plantas{% endblock %}
+
+{% block content %}
+    <h2>Mis Plantas</h2>
+    <table class="plant-table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Imagen</th>
+                <th>Especie</th>
+                <th>Estado</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for planta in plantas %}
+            <tr>
+                <td>{{ planta.nombre }}</td>
+                <td><img src="{{ planta.imagen.url }}" alt="{{ planta.nombre }}" class="plant-image"></td>
+                <td>{{ planta.especie }}</td>
+                <td>{{ planta.estado }}</td>
+                <td>{{ planta.descripcion }}</td>
+                <td>
+                    <a href="{% url 'editar_planta' planta.id %}" class="btn btn-edit">Editar</a>
+                    <a href="{% url 'eliminar_planta' planta.id %}" class="btn btn-delete">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

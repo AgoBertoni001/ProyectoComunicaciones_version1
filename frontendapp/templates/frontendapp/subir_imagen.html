@@ -1,0 +1,12 @@
+{% extends 'layouts/layout.html' %}
+
+{% block title %}Subir Imagen{% endblock %}
+
+{% block content %}
+    <h2>Subir Imagen de Planta</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Subir</button>
+    </form>
+{% endblock %}

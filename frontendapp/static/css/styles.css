@@ -1,0 +1,127 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    flex-direction: column; /* Stack children vertically */
+    min-height: 100vh;
+}
+
+
+.header-content {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    position: relative;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+
+
+.navbar {
+    background-color: #444;
+    overflow: hidden;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 15px;
+}
+
+.navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: inline-block;
+}
+
+.navbar ul li a:hover {
+    background-color: #555;
+}
+
+.content {
+    background-color: #fff; /* Fondo blanco */
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+    flex: 1;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    margin-top: auto;
+}
+
+
+
+/* Ensure this CSS is included in your layout.html or main CSS file */
+
+.plant-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.plant-table th, .plant-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.plant-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.plant-image {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 2px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-edit {
+    background-color: #4CAF50; /* Green */
+}
+
+.btn-delete {
+    background-color: #f44336; /* Red */
+}
+
+.btn-edit:hover {
+    background-color: #45a049;
+}
+
+.btn-delete:hover {
+    background-color: #e41a1a;
+}
