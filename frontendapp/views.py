@@ -16,11 +16,17 @@ def index(request):
 def about(request):
     return render(request, 'frontendapp/about.html')
 
+
 def mis_plantas(request):
-    plantas = Planta.objects.all()  # Filtrar por usuario si es necesario
-    return render(request, 'frontendapp/mis_plantas.html', {
-        'plantas': plantas
-    })
+    # Suponiendo que la URL de tu API para obtener las plantas es '/api/plantas/'
+    response = requests.get('https://comunicaciones.simix.com.ar/v1/comunicaciones/public/plantas')
+
+    if response.status_code == 200:
+        plantas = response.json()  # Parsear la respuesta JSON
+    else:
+        plantas = []  # Si hay un error, inicializamos como lista vacía
+
+    return render(request, 'mis_plantas.html', {'plantas': plantas})
 
 def subir_imagen(request):
     if request.method == 'POST':
@@ -30,7 +36,7 @@ def subir_imagen(request):
             planta = form.save(commit=False)
 
             # Preparar los datos para enviar a la API
-            url = "https://comunicaciones.simix.com.ar/v1/comunicaciones/public/plantas"
+            url = "https://comunicaciones.simix.com.ar/v1/comunicaciones/public/planta"
             files = {'imagen': request.FILES['imagen']}
             data = {
                 'descripcion': planta.descripcion,
@@ -89,24 +95,6 @@ def listar_plantas(request):
     plantas = Planta.objects.all().values('id', 'nombre', 'imagen', 'especie', 'estado', 'descripcion')
     return JsonResponse(list(plantas), safe=False)
 
-def obtener_planta(request, id):
-    # Aquí haces la solicitud GET a la API para obtener la planta analizada
-    url = f"https://comunicaciones.simix.com.ar/v1/comunicaciones/public/plantas/{id}"
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        data = response.json()
-        # Aquí asumes que la API devuelve los campos requeridos
-        return JsonResponse({
-            'nombre': data['nombre'],
-            'imagen': data['imagen'],
-            'especie': data['especie'],
-            'estado': data['estado'],
-            'descripcion': data['descripcion']
-        })
-    else:
-        # Manejar el error si la API no responde correctamente
-        return JsonResponse({'error': 'No se pudo obtener la planta'}, status=400)
 
 @csrf_exempt  # Usar solo si no tienes autenticación
 def crear_planta(request):
