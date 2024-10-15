@@ -3,15 +3,16 @@
 {% block title %}Mis Plantas{% endblock %}
 
 {% block content %}
-    <h2>Mis Plantas</h2>
-    <table class="plant-table">
-        <thead>
+    <h2 class="my-4">Mis Plantas</h2>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
             <tr>
                 <th>Nombre</th>
                 <th>Imagen</th>
                 <th>Especie</th>
                 <th>Estado</th>
                 <th>Descripción</th>
+                <th>Datos de Sensores</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -19,13 +20,22 @@
             {% for planta in plantas %}
             <tr>
                 <td>{{ planta.nombre }}</td>
-                <td><img src="{{ planta.imagen.url }}" alt="{{ planta.nombre }}" class="plant-image"></td>
+                <td>
+                    {% if planta.imagen %}
+                        <img src="{{ planta.imagen.url }}" alt="{{ planta.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                    {% else %}
+                        <img src="https://comunicaciones.simix.com.ar/v1/comunicaciones/public/{{ planta.imagen }}" alt="{{ planta.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                    {% endif %}
+                </td>
                 <td>{{ planta.especie }}</td>
                 <td>{{ planta.estado }}</td>
                 <td>{{ planta.descripcion }}</td>
                 <td>
-                    <a href="{% url 'editar_planta' planta.id %}" class="btn btn-edit">Editar</a>
-                    <a href="{% url 'eliminar_planta' planta.id %}" class="btn btn-delete">Eliminar</a>
+                    <a href="{% url 'datos_sensor' planta.id %}">Ver Datos de Sensores</a>
+                </td>
+                <td>
+                    <a href="{% url 'editar_planta' planta.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_planta' planta.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>
             </tr>
             {% endfor %}

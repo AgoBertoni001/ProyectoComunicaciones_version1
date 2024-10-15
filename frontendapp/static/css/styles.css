@@ -1,68 +1,63 @@
 html, body {
     height: 100%;
     margin: 0;
+    font-family: Arial, sans-serif; /* o usa la fuente de Bootstrap si lo prefieres */
 }
 
 body {
     display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
     margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    flex-direction: column; /* Stack children vertically */
-    min-height: 100vh;
 }
-
 
 .header-content {
     text-align: center;
     background-color: #333;
     color: #fff;
     padding: 20px;
-    position: relative;
 }
-
-.header-title {
-    margin: 0;
-    font-size: 2.5em;
-}
-
-
 
 .navbar {
     background-color: #444;
-    overflow: hidden;
+    height: 60px; /* Fija la altura de la barra de navegación */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
 }
 
 .navbar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    text-align: center;
+    display: flex;
+    justify-content: center; /* Centra los elementos del menú */
+    width: 100%; /* Ocupar todo el ancho del contenedor padre */
 }
 
 .navbar ul li {
-    display: inline;
     margin-right: 15px;
+    padding: 0 15px;
 }
 
 .navbar ul li a {
-    color: #fff;
+    color: #808080; /* Cambié el color de nuevo al blanco para que resalte */
     text-decoration: none;
     padding: 14px 20px;
-    display: inline-block;
+    display: block;
 }
 
 .navbar ul li a:hover {
     background-color: #555;
 }
 
+
 .content {
-    background-color: #fff; /* Fondo blanco */
+    background-color: #fff;
     padding: 20px;
     margin: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 60px;
     flex: 1;
 }
 
@@ -71,13 +66,10 @@ footer {
     color: #fff;
     padding: 10px;
     text-align: center;
-    margin-top: auto;
+    margin-top: auto; /* Empuja el footer al fondo */
 }
 
-
-
-/* Ensure this CSS is included in your layout.html or main CSS file */
-
+/* Estilos para la tabla de plantas */
 .plant-table {
     width: 100%;
     border-collapse: collapse;
@@ -87,12 +79,10 @@ footer {
 .plant-table th, .plant-table td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
 }
 
 .plant-table th {
     background-color: #f2f2f2;
-    color: #333;
 }
 
 .plant-image {
@@ -101,21 +91,35 @@ footer {
     object-fit: cover;
 }
 
-.btn {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 2px;
-    border-radius: 4px;
-    text-decoration: none;
-    color: #fff;
+/* Estilos para formularios */
+.form-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
 }
 
+.edit-plant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Custom buttons, but use Bootstrap's classes for consistency */
 .btn-edit {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
 }
 
 .btn-delete {
-    background-color: #f44336; /* Red */
+    background-color: #f44336;
 }
 
 .btn-edit:hover {
@@ -124,4 +128,24 @@ footer {
 
 .btn-delete:hover {
     background-color: #e41a1a;
+}
+
+.card {
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.form-label {
+    font-weight: bold; /* Negrita en las etiquetas */
+}
+
+.btn {
+    transition: background-color 0.3s ease; /* Efecto de transición */
+}
+
+.btn-success:hover {
+    background-color: #28a745; /* Verde más oscuro en hover */
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f8f9fa; /* Fondo claro en hover para el botón de cancelar */
 }

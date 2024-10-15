@@ -1,0 +1,52 @@
+{% extends 'layouts/layout.html' %}
+
+{% block title %}Datos de Sensores{% endblock %}
+
+{% block content %}
+    
+    <div class="container my-4">
+        <h2 class="mb-4">Datos de Sensores para "{{ planta.nombre }}"</h2>
+        
+        <!-- Gráfico de Humedad del Suelo -->
+        <h3>Humedad del Suelo</h3>
+        <canvas id="humedadTierraChart" class="w-100" style="max-height: 400px;"></canvas>
+    
+        <!-- Gráfico de Humedad del Aire -->
+        <h3>Humedad del Aire</h3>
+        <canvas id="humedadAireChart" class="w-100" style="max-height: 400px;"></canvas>
+    
+        <!-- Gráfico de Temperatura del Aire -->
+        <h3>Temperatura del Aire</h3>
+        <canvas id="temperaturaAireChart" class="w-100" style="max-height: 400px;"></canvas>
+    </div>
+
+
+    <div class="container my-4">
+        <h2 class="mb-4">Datos historicos para "{{ planta.nombre }}"</h2>
+        
+        <h3>Registro de Sensores</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Humedad de Tierra (%)</th>
+                    <th>Humedad del Aire (%)</th>
+                    <th>Temperatura del Aire (°C)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in sensor_data %}
+                <tr>
+                    <td>{{ data.fecha }}</td>
+                    <td>{{ data.humedad_tierra }}</td>
+                    <td>{{ data.humedad_aire }}</td>
+                    <td>{{ data.temperatura_aire }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    
+
+{% endblock %}

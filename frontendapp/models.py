@@ -10,3 +10,12 @@ class Planta(models.Model):
     def __str__(self):
         return self.nombre
 
+class SensorData(models.Model):
+    planta = models.ForeignKey(Planta, on_delete=models.CASCADE, related_name='sensor_data')
+    fecha = models.DateTimeField(auto_now_add=True)
+    humedad_tierra = models.FloatField()
+    humedad_aire = models.FloatField()
+    temperatura_aire = models.FloatField()
+
+    def __str__(self):
+        return f"Data from {self.timestamp}"

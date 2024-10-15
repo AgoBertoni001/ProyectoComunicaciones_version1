@@ -3,10 +3,32 @@
 {% block title %}Editar Planta{% endblock %}
 
 {% block content %}
-    <h2>Editar Planta</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar cambios</button>
-    </form>
+<div class="container my-5">
+    <h2 class="text-center mb-4">Editar Planta</h2>
+    <p class="text-center">Modifica la información de la planta y guarda los cambios.</p>
+
+    <div class="card shadow-sm p-4">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Campo de Selección de Imagen con estilo moderno -->
+            <div class="mb-3">
+                <label for="id_imagen" class="form-label">Seleccionar imagen:</label>
+                <input type="file" id="id_imagen" class="form-control" name="imagen" accept="image/*" required>
+            </div>
+            
+            <!-- Cuadro de Descripción ajustado -->
+            <div class="mb-3">
+                <label for="id_descripcion" class="form-label">Descripción:</label>
+                <textarea id="id_descripcion" class="form-control" name="descripcion" rows="3" placeholder="Añade una breve descripción..." required>{{ form.descripcion.value }}</textarea>
+            </div>
+
+            <!-- Botones ajustados a tamaño normal -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <a href="{% url 'mis_plantas' %}" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

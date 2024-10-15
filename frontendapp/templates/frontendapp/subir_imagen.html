@@ -3,10 +3,42 @@
 {% block title %}Subir Imagen{% endblock %}
 
 {% block content %}
-    <h2>Subir Imagen de Planta</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Subir</button>
-    </form>
+<div class="container my-5">
+    <h2 class="text-center mb-4">Subir Imagen de Planta</h2>
+    <p class="text-center">Selecciona una imagen de la planta y añade una breve descripción. Recibirás detalles sobre la planta una vez procesada.</p>
+
+    <div class="card shadow-sm p-4">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Campo de Selección de Imagen -->
+            <div class="mb-3">
+                <label for="id_imagen" class="form-label">Seleccionar imagen:</label>
+                <input type="file" id="id_imagen" name="imagen" class="form-control" accept="image/*" required>
+                {% if form.imagen.errors %}
+                    <div class="alert alert-danger mt-2">
+                        {{ form.imagen.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Cuadro de Descripción ajustado -->
+            <div class="mb-3">
+                <label for="id_descripcion" class="form-label">Descripción:</label>
+                <textarea id="id_descripcion" name="descripcion" class="form-control" rows="2" placeholder="Añade una breve descripción..." required>{{ form.descripcion.value }}</textarea>
+                {% if form.descripcion.errors %}
+                    <div class="alert alert-danger mt-2">
+                        {{ form.descripcion.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Botones ajustados a tamaño normal -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">Nueva Planta</button>
+                <a href="{% url 'mis_plantas' %}" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

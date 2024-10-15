@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from frontendapp import views
-from frontendapp.views import obtener_planta, listar_plantas, crear_planta, actualizar_planta, eliminar_planta
+from frontendapp.views import obtener_planta, listar_plantas, crear_planta, actualizar_planta, eliminar_planta, datos_sensor, procesando
 
 
 urlpatterns = [
@@ -32,11 +32,8 @@ urlpatterns = [
     path('editar-planta/<int:planta_id>/', views.editar_planta, name='editar_planta'),
     path('eliminar-planta/<int:planta_id>/', views.eliminar_planta, name='eliminar_planta'),
     path('obtener-planta/', obtener_planta, name='obtener_planta'),
-    path('api/plantas/', listar_plantas, name='listar_plantas'),
-    path('api/plantas/<int:id>/', obtener_planta, name='obtener_planta'),
-    path('api/plantas/crear/', crear_planta, name='crear_planta'),
-    path('api/plantas/actualizar/<int:id>/', actualizar_planta, name='actualizar_planta'),
-    path('api/plantas/eliminar/<int:id>/', eliminar_planta, name='eliminar_planta'),
+    path('datos-sensor/<int:planta_id>/', datos_sensor, name='datos_sensor'),
+    path('procesando/<int:response_code>/', procesando, name='procesando'),  
 
 
 
