@@ -8,7 +8,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
-    margin: 0;
+}
+
+main {
+    flex: 1; /* Permite que el main ocupe el espacio disponible */
 }
 
 .header-content {
@@ -17,6 +20,24 @@ body {
     color: #fff;
     padding: 20px;
 }
+.custom-header {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(40, 40, 40, 0.9) 100%); /* Degradado gris */
+    transition: padding 0.3s ease; /* Transición suave */
+}
+
+
+.custom-header h1 {
+    font-size: 3rem; /* Tamaño de fuente grande para el título */
+}
+
+/* Cambia el tamaño de la cabecera al hacer scroll */
+body.scrolled .custom-header {
+    padding-top: 3rem; /* Reduce el espacio superior */
+    padding-bottom: 2rem; /* Reduce el espacio inferior */
+}
+
+/* Alternativamente, puedes definir aquí cómo se verá el encabezado al hacer scroll */
+
 
 .navbar {
     background-color: #444;
@@ -114,7 +135,7 @@ footer {
 }
 
 /* Custom buttons, but use Bootstrap's classes for consistency */
-.btn-edit {
+.btn-valores {
     background-color: #4CAF50;
 }
 
@@ -122,7 +143,7 @@ footer {
     background-color: #f44336;
 }
 
-.btn-edit:hover {
+.btn-valores:hover {
     background-color: #45a049;
 }
 
@@ -148,4 +169,75 @@ footer {
 
 .btn-outline-secondary:hover {
     background-color: #f8f9fa; /* Fondo claro en hover para el botón de cancelar */
+}
+
+.table th, .table td {
+    padding: 10px; /* Aumentar el padding */
+}
+
+.table {
+    margin-bottom: 20px; /* Espacio debajo de la tabla */
+}
+
+.img-thumbnail {
+    border-radius: 8px; /* Bordes redondeados para las imágenes */
+}
+.card {
+    transition: transform 0.2s, box-shadow 0.2s; /* Animation */
+    min-height: 300px; /* Adjust height as needed */
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Zoom effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Shadow effect */}
+
+.hover-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+.no-hover-shadow {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: none;
+    overflow: hidden; /* Prevents content overflow */
+    max-width: 100%; /* Ensures card doesn't expand beyond its parent */
+}
+
+.no-hover-shadow:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transform: none; /* Prevents any scaling or resizing */
+}
+
+
+.card-body {
+    flex: 1; /* Allow the card body to take up the remaining space */
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+#plantImage {
+    border: 2px solid #007bff; /* Bootstrap primary color */
+    border-radius: 10px;
+}
+
+.btn {
+    margin-right: 10px; /* Space between buttons */
+}
+.custom-modal-header {
+    background-color: #bababa; /* Cambia este color al que prefieras */
+    color: white; /* Cambia el color del texto si es necesario */
 }

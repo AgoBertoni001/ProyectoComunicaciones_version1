@@ -5,9 +5,11 @@
 {% block content %}
     <div class="container my-4">
         <h2 class="mb-4">Eliminar Planta</h2>
-        <p>¿Estás seguro de que deseas eliminar "{{ planta.nombre }}"?</p>
+        <p>¿Estás seguro de que deseas eliminar esta planta?</p>
         <form method="POST">
             {% csrf_token %}
+            <!-- Campo oculto para indicar que se trata de una eliminación -->
+            <input type="hidden" name="_method" value="DELETE">
             <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-danger">Eliminar</button>
                 <a href="{% url 'mis_plantas' %}" class="btn btn-secondary">Cancelar</a>

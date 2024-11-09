@@ -1,0 +1,9 @@
+{% extends 'layouts/layout.html' %}
+
+{% block title %}Éxito{% endblock %}
+
+{% block content %}
+<h2>Éxito</h2>
+<p>{{ mensaje }}</p>
+<a href="{% url 'mis_plantas' %}" class="btn btn-primary">Volver a Mis Plantas</a>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'layouts/layout.html' %}
+
+{% block title %}Valores de referencia{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Cargar valores de referencia</h2>
+    <p class="text-center">Actualiza los valores de temperatura, humedad de tierra y ambiente de la planta.</p>
+
+    <div class="card shadow-sm p-4 no-hover-shadow">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+            {% endif %}
+
+            <!-- Campo de temperatura -->
+            <div class="form-group">
+                <label for="temperatura">Temperatura (°C)</label>
+                <input type="number" step="0.1" class="form-control" id="temperatura" name="temperatura" value="{{ planta.temperatura }}">
+            </div>
+
+            <!-- Campo de humedad de tierra -->
+            <div class="form-group">
+                <label for="humedadTierra">Humedad Tierra (%)</label>
+                <input type="number" step="0.1" class="form-control" id="humedadTierra" name="humedadTierra" value="{{ planta.humedadTierra }}">
+            </div>
+
+            <!-- Campo de humedad de ambiente -->
+            <div class="form-group">
+                <label for="humedadAmbiente">Humedad Ambiente (%)</label>
+                <input type="number" step="0.1" class="form-control" id="humedadAmbiente" name="humedadAmbiente" value="{{ planta.humedadAmbiente }}">
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">Guardar valores</button>
+                <a href="{% url 'mis_plantas' %}" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

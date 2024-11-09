@@ -7,6 +7,8 @@ from django.http import JsonResponse
 import json
 import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+
 
 def index(request):
     return render(request, 'frontendapp/index.html', {
@@ -18,15 +20,14 @@ def about(request):
 
 
 def mis_plantas(request):
-    # Suponiendo que la URL de tu API para obtener las plantas es '/api/plantas/'
     response = requests.get('https://comunicaciones.simix.com.ar/v1/comunicaciones/public/plantas')
 
     if response.status_code == 200:
-        plantas = response.json()  # Parsear la respuesta JSON
+        plantas = response.json()  
     else:
-        plantas = []  # Si hay un error, inicializamos como lista vacía
+        plantas = [] 
 
-    return render(request, 'mis_plantas.html', {'plantas': plantas})
+    return render(request, 'frontendapp/mis_plantas.html', {'plantas': plantas})
 
 def subir_imagen(request):
     if request.method == 'POST':
@@ -71,73 +72,52 @@ def procesando(request, response_code):
             'mensaje': mensaje,
             'ir_a_mis_plantas': False  # No mostrar la opción para ir a mis plantas
         })
-def editar_planta(request, planta_id):
-    planta = get_object_or_404(Planta, id=planta_id)
+
+def valores_referencia(request, planta_id):
     if request.method == 'POST':
-        form = PlantaForm(request.POST, request.FILES, instance=planta)
-        if form.is_valid():
-            form.save()
-            return redirect('mis_plantas')
-    else:
-        form = PlantaForm(instance=planta)
-    return render(request, 'frontendapp/editar_planta.html', {'form': form, 'planta': planta})
+        # Lógica para hacer el PUT a la API
+        data = {
+            'temperatura': request.POST.get('temperatura'),
+            'humedadTierra': request.POST.get('humedadTierra'),
+            'humedadAmbiente': request.POST.get('humedadAmbiente'),
+        }
+        # URL de la API donde se debe hacer el PUT
+        url = f"https://comunicaciones.simix.com.ar/v1/comunicaciones/public/planta/{planta_id}"
+        
+        response = requests.put(url, json=data)
+
+        if response.status_code in (204, 200):
+            return redirect('mis_plantas')  # Redirigir a la página de mis plantas
+        else:
+            # Manejo de errores si el PUT falla
+            return render(request, 'frontendapp/valores_referencia.html', {
+                'error': 'Error al cargar valores. Inténtalo de nuevo.',
+                'planta_id': planta_id
+            })
+    return render(request, 'frontendapp/valores_referencia.html', {'planta_id': planta_id})
 
 def eliminar_planta(request, planta_id):
-    planta = get_object_or_404(Planta, id=planta_id)
-    if request.method == 'POST':
-        planta.delete()
-        return redirect('mis_plantas')
-    return render(request, 'frontendapp/eliminar_planta.html', {'planta': planta})
+    # Comprobamos si el método es POST y si el campo oculto "_method" es DELETE
+    if request.method == 'POST' and request.POST.get('_method') == 'DELETE':
+        url = f"https://comunicaciones.simix.com.ar/v1/comunicaciones/public/planta/{planta_id}"
 
-# Endpoints
+        # Realizamos la solicitud DELETE a la API
+        response = requests.delete(url)
 
-def listar_plantas(request):
-    plantas = Planta.objects.all().values('id', 'nombre', 'imagen', 'especie', 'estado', 'descripcion')
-    return JsonResponse(list(plantas), safe=False)
+        # Imprimir el código de estado y el contenido de la respuesta para depuración
+        print(f"DELETE status: {response.status_code}")
+        print(f"DELETE response content: {response.text}")
 
+        # Manejar los diferentes códigos de respuesta
+        if response.status_code in (204, 200):  # Ajustar según la API
+            return redirect('mis_plantas')  # Redirigir a la vista 'mis_plantas'
+        else:
+            # Si hay algún error, mostramos la página de confirmación con el error
+            return render(request, 'frontendapp/eliminar_planta.html', {
+                'error': 'Error al eliminar la planta. Inténtalo de nuevo.',
+                'planta_id': planta_id
+            })
 
-@csrf_exempt  # Usar solo si no tienes autenticación
-def crear_planta(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        planta = Planta.objects.create(
-            nombre=data['nombre'],
-            imagen=data['imagen'],
-            especie=data.get('especie', None),
-            estado=data['estado'],
-            descripcion=data['descripcion']
-        )
-        return JsonResponse({'id': planta.id}, status=201)
+    # Si no es POST, mostramos la página de confirmación
+    return render(request, 'frontendapp/eliminar_planta.html', {'planta_id': planta_id})
 
-@csrf_exempt  # Usar solo si no tienes autenticación
-def actualizar_planta(request, id):
-    planta = get_object_or_404(Planta, id=id)
-    if request.method == 'PUT':
-        data = json.loads(request.body)
-        planta.nombre = data['nombre']
-        planta.imagen = data['imagen']
-        planta.especie = data.get('especie', planta.especie)
-        planta.estado = data['estado']
-        planta.descripcion = data['descripcion']
-        planta.save()
-        return JsonResponse({'id': planta.id}, status=200)
-
-def datos_sensor(request, planta_id):
-    planta = get_object_or_404(Planta, id=planta_id)
-    
-    # Datos falsos para la demostración
-    sensor_data = [
-        {
-            'fecha': datetime.datetime.now() - datetime.timedelta(days=i),
-            'humedad_tierra': 30 + i,
-            'humedad_aire': 50 + 2 * i,
-            'temperatura_aire': 20 + 0.5 * i
-        }
-        for i in range(10)
-    ]
-    
-    context = {
-        'planta': planta,
-        'sensor_data': sensor_data
-    }
-    return render(request, 'frontendapp/datos_sensor.html', context)
